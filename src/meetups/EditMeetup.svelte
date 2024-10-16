@@ -5,7 +5,6 @@
   import Modal from "./Modal.svelte";
   import { isEmpty } from "../helpers/validation.js";
   let title = "";
-  let isTitleValid = false;
   let description = "";
   let image = "";
   const dispatch = createEventDispatcher();
@@ -22,6 +21,8 @@
   }
 
   $: isTitleValid = !isEmpty(title);
+  $: isDescriptionValid = !isEmpty(description);
+  $: isFormValid = isTitleValid && isDescriptionValid;
 </script>
 
 <Modal title="Added meetup data" on:cancel>
@@ -39,6 +40,8 @@
       id="description"
       label="Description"
       controlType="textarea"
+      valid={isDescriptionValid}
+      validityMessage="Please enter a valid description."
       value={description}
       on:input={(event) => (description = event.target.value)}
     ></TextInput>
@@ -52,7 +55,9 @@
   </form>
   <div slot="footer">
     <Button type="submit" on:click={cancelForm}>Cancel</Button>
-    <Button type="submit" on:click={submitForm}>Save</Button>
+    <Button type="submit" disabled={!isFormValid} on:click={submitForm}
+      >Save</Button
+    >
   </div>
 </Modal>
 
