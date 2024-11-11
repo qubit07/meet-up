@@ -12,7 +12,8 @@
       description={meetup.description}
       image={meetup.image}
       isFavorite={meetup.isFavorite}
-      on:tooglefavorite
+      on:showdetails
+      on:edit
     ></MeetupItem>
   {/each}
 </section>

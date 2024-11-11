@@ -4,17 +4,40 @@
   import TextInput from "../ui/TextInput.svelte";
   import Modal from "./Modal.svelte";
   import { isEmpty } from "../helpers/validation.js";
+  import meetups from "./meetups-store.js";
+
+  export let id = null;
+
   let title = "";
   let description = "";
   let image = "";
+
+  if (id) {
+    const unsubscribe = meetups.subscribe((items) => {
+      const selectedMeetup = items.find((i) => i.id === id);
+
+      title = selectedMeetup.title;
+      description = selectedMeetup.description;
+      image = selectedMeetup.image;
+    });
+    unsubscribe();
+  }
+
   const dispatch = createEventDispatcher();
 
   function submitForm() {
-    dispatch("save", {
+    const newMeetup = {
       title: title,
       description: description,
       image: image,
-    });
+    };
+
+    if (id) {
+      meetups.updateMeetup(id, newMeetup);
+    } else {
+      meetups.addMeetups(newMeetup);
+    }
+    dispatch("save");
   }
   function cancelForm() {
     dispatch("cancel");
