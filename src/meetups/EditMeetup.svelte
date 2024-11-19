@@ -43,6 +43,11 @@
     dispatch("cancel");
   }
 
+  function deleteMeetup() {
+    meetups.removeMeetups(id);
+    dispatch("save");
+  }
+
   $: isTitleValid = !isEmpty(title);
   $: isDescriptionValid = !isEmpty(description);
   $: isFormValid = isTitleValid && isDescriptionValid;
@@ -81,6 +86,9 @@
     <Button type="submit" disabled={!isFormValid} on:click={submitForm}
       >Save</Button
     >
+    {#if id}
+      <Button type="button" on:click={deleteMeetup}>Delete</Button>
+    {/if}
   </div>
 </Modal>
 
