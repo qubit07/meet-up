@@ -2,9 +2,9 @@
   import { createEventDispatcher } from "svelte";
   import Button from "../ui/Button.svelte";
   import TextInput from "../ui/TextInput.svelte";
-  import Modal from "./Modal.svelte";
   import { isEmpty } from "../helpers/validation.js";
   import meetups from "./meetups-store.js";
+  import Modal from "../ui/Modal.svelte";
 
   export let id = null;
 
